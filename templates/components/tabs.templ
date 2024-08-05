@@ -1,0 +1,17 @@
+package components
+
+templ Tabs() {
+<div  hx-target="#tab-contents" role="tablist" class="tabs tabs-bordered mt-8"
+     hx-on:htmx-after-on-load="let currentTab = document.querySelector('[aria-selected=true]');
+                               currentTab.setAttribute('aria-selected', 'false')
+                               currentTab.classList.remove('tab-active')
+                               let newTab = event.target
+                               newTab.setAttribute('aria-selected', 'true')
+                               newTab.classList.add('tab-active ')">
+    <a role="tab" aria-controls="tab-contents" aria-selected="true" hx-get="/tab1" class="tab">Samples</a>
+    <a role="tab" aria-controls="tab-contents" aria-selected="false" hx-get="/tab2" class="tab">Quotations</a>
+    <a role="tab" aria-controls="tab-contents" aria-selected="false" hx-get="/tab3" class="tab">Jobs</a>
+</div>
+
+<div id="tab-contents" class="p-4 my-3" role="tabpanel" hx-get="/tab1" hx-trigger="load"></div>
+}
