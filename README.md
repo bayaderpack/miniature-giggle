@@ -40,6 +40,12 @@ Tools:
 ├── assets
 │   ├── scripts.js
 │   └── styles.scss
+├── config
+│   └── config.go
+├── db
+│   └── db.go
+├── handlers
+│   └── handlers.go
 ├── static
 │   ├── images
 │   │   └── gowebly.svg
@@ -52,9 +58,22 @@ Tools:
 │   ├── manifest-touch-icon.svg
 │   └── manifest.webmanifest
 ├── templates
+│   ├── components
+│   │   ├── dropdown.templ
+│   │   ├── notification.templ
+│   │   ├── sidebar.templ
+│   │   ├── sidebaritem.templ
+│   │   ├── statistics.templ
+│   │   ├── table.templ
+│   │   └── tabs.templ
+│   ├── svg
+│   │   └── dashboard.templ
 │   ├── pages
+│   │   ├── table.templ
 │   │   └── index.templ
 │   └── main.templ
+├── utils
+│   └── utils.go
 ├── .gitignore
 ├── .dockerignore
 ├── .prettierignore
@@ -66,7 +85,6 @@ Tools:
 ├── package.json
 ├── go.mod
 ├── go.sum
-├── handlers.go
 ├── server.go
 ├── main.go
 └── README.md
