@@ -1,0 +1,111 @@
+package settings
+import (
+	"github.com/bayadev/bayahtmx/models"	
+)
+
+type Location struct {
+	X string `json:"x"`
+	Y string `json:"y"`
+}
+
+css MapStyle() {
+	height: 300px;
+	width: 100%;
+}
+
+script MapLibre() {
+
+        const map = new maplibregl.Map({
+        container: 'map', // container id
+        style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json', // style URL
+        center: [46.7171, 24.6744], // starting position [lng, lat]
+        zoom: 14, // starting zoom
+        maplibreLogo: true
+    });
+
+    					let geo = document.getElementById("geo")
+
+    		map.addControl(
+			new maplibregl.GeolocateControl({
+				positionOptions: {
+					enableHighAccuracy: true,
+				},
+				trackUserLocation: true,
+			}),
+		)
+
+        		if (navigator.geolocation) {
+			navigator.geolocation.getCurrentPosition(function (position) {
+
+
+let lat = JSON.parse(geo.value).x 
+let lon = JSON.parse(geo.value).y 
+                // var lat = JSON.parse(coords).x ? JSON.parse(coords).x :   position.coords.longitude
+				// var lon = JSON.parse(coords).y ? JSON.parse(coords).y :  position.coords.latitude
+                // console.log(JSON.parse(coords).x )
+				// coordinates = [position.coords.longitude, position.coords.latitude]
+				map.jumpTo({
+					center: [lon, lat],
+					zoom: 16,
+					bearing: 90,
+				})
+				let marker = new maplibregl.Marker({ draggable: true })
+					.setLngLat([lon, lat])
+					.addTo(map)
+
+				function onDragEnd() {
+					const lngLat = marker.getLngLat()
+
+
+                    var location = {
+                        x: lngLat.lng,
+                        y: lngLat.lat 
+                    }
+                    
+					geo.value = JSON.stringify(location)
+				}
+
+				marker.on('dragend', onDragEnd)
+			})
+		}
+}
+
+templ Store(store []models.Setting) {
+
+        	<div class="grid grid-cols-1">
+
+		for _, item := range store {
+
+			switch item.KeyID {
+				case "geo":
+					<div id="map" class={ MapStyle() }></div>
+					<input type="hidden" id="geo" name="geo" value={ item.Value }/>
+					@MapLibre()
+				case "tax_status", "points_status", "maintenance" :
+					<div class="form-control w-52">
+						<label class="label cursor-pointer">
+							<span class="label-text">{ Capitalize(item.KeyID) }</span>
+							<input
+								type="checkbox"
+								name={ item.KeyID }
+								class="toggle toggle-primary"
+								if item.Value == "1" {
+									checked
+								}
+							/>
+						</label>
+					</div>
+				default:
+					<label class="form-control w-full max-w-xs">
+						<div class="label">
+							<span class="label-text">{ Capitalize(item.KeyID) }</span>
+						</div>
+						<input type="text" name={ item.KeyID } value={ item.Value } class="input input-bordered w-full max-w-xs"/>
+						<div class="label">
+							<span class="label-text-alt">Bottom Left label</span>
+						</div>
+					</label>
+			}
+		}
+	</div>
+}

@@ -2,141 +2,20 @@ package pages
 
 import (
 	"github.com/bayadev/bayahtmx/models"
-	"slices"
-	"strings"
+    "github.com/bayadev/bayahtmx/templates/components/settings"
+
+	
 )
 
-func Capitalize(name string) (string, error) {
-	return strings.Title(strings.Join(strings.Split(name, "_"), " ")), nil
-}
-
-type Location struct {
-	X string `json:"x"`
-	Y string `json:"y"`
-}
-
-css MapStyle() {
-	height: 300px;
-	width: 100%;
-}
-
-script MapLibre() {
-
-        const map = new maplibregl.Map({
-        container: 'map', // container id
-        style: 'https://basemaps.cartocdn.com/gl/voyager-gl-style/style.json', // style URL
-        center: [46.7171, 24.6744], // starting position [lng, lat]
-        zoom: 14, // starting zoom
-        maplibreLogo: true
-    });
-
-    					let geo = document.getElementById("geo")
-
-    		map.addControl(
-			new maplibregl.GeolocateControl({
-				positionOptions: {
-					enableHighAccuracy: true,
-				},
-				trackUserLocation: true,
-			}),
-		)
-
-        		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition(function (position) {
 
 
-let lat = JSON.parse(geo.value).x 
-let lon = JSON.parse(geo.value).y 
-                // var lat = JSON.parse(coords).x ? JSON.parse(coords).x :   position.coords.longitude
-				// var lon = JSON.parse(coords).y ? JSON.parse(coords).y :  position.coords.latitude
-                // console.log(JSON.parse(coords).x )
-				// coordinates = [position.coords.longitude, position.coords.latitude]
-				map.jumpTo({
-					center: [lon, lat],
-					zoom: 16,
-					bearing: 90,
-				})
-				let marker = new maplibregl.Marker({ draggable: true })
-					.setLngLat([lon, lat])
-					.addTo(map)
 
-				function onDragEnd() {
-					const lngLat = marker.getLngLat()
+templ Settings(config []models.Setting, store []models.Setting, social []models.Setting) {
+    <div class="grid grid-cols-3">
+    @settings.Store(store)
 
+@settings.Socials(social)
+@settings.Config(config)
+    </div>
 
-                    var location = {
-                        x: lngLat.lng,
-                        y: lngLat.lat 
-                    }
-                    
-					geo.value = JSON.stringify(location)
-				}
-
-				marker.on('dragend', onDragEnd)
-			})
-		}
-}
-
-func getIndex(data []models.Setting, key string) int {
-	idx := slices.IndexFunc(data, func(c models.Setting) bool {
-		return c.KeyID == key+"_logo"
-	})
-	return idx
-}
-
-templ Settings(data []models.Setting) {
-	<div class="grid grid-cols-3">
-
-		for _, item := range data {
-
-			switch item.KeyID {
-				case "geo":
-					<div id="map" class={ MapStyle() }></div>
-					<input type="hidden" id="geo" name="geo" value={ item.Value }/>
-					@MapLibre()
-				case "facebook_logo", "twitter_logo", "instagram_logo", "snapchat_logo", "whatsapp_logo":
-				case "facebook", "twitter", "instagram", "snapchat", "whatsapp":
-                	{{idx := slices.IndexFunc(data, func(c models.Setting) bool {	return c.KeyID == item.KeyID+"_logo" } )}}
-					if idx != -1 {
-						// <label class="form-control input input-bordered flex items-center gap-2 relative w-full max-w-xs">
-						// 	<input type="text" class="grow" placeholder={ item.KeyID } value={ item.Value }/>
-						// 	// <img class="h-8 w-8 absolute" src={ data[idx].Value }  alt={ data[idx].KeyID }/>
-						// </label>
-                        										<label class="form-control w-full max-w-xs">
-						<div class="label">
-							<span class="label-text">{ Capitalize(item.KeyID) }</span>
-						</div>
-						<input type="text" name={ item.KeyID } value={ item.Value } class="input input-bordered w-full max-w-xs"/>
-						<div class="label">
-							<span class="label-text-alt">Bottom Left label</span>
-						</div>
-					</label>
-					}
-				case "tax_status", "points_status", "maintenance" :
-					<div class="form-control w-52">
-						<label class="label cursor-pointer">
-							<span class="label-text">{ Capitalize(item.KeyID) }</span>
-							<input
-								type="checkbox"
-								name={ item.KeyID }
-								class="toggle toggle-primary"
-								if item.Value == "1" {
-									checked
-								}
-							/>
-						</label>
-					</div>
-				default:
-					<label class="form-control w-full max-w-xs">
-						<div class="label">
-							<span class="label-text">{ Capitalize(item.KeyID) }</span>
-						</div>
-						<input type="text" name={ item.KeyID } value={ item.Value } class="input input-bordered w-full max-w-xs"/>
-						<div class="label">
-							<span class="label-text-alt">Bottom Left label</span>
-						</div>
-					</label>
-			}
-		}
-	</div>
 }

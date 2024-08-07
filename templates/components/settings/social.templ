@@ -1,0 +1,38 @@
+package settings 
+
+import (
+"github.com/bayadev/bayahtmx/models"
+
+    "strings"
+    "slices"
+)
+
+func Capitalize(name string) (string, error) {
+	return strings.Title(strings.Join(strings.Split(name, "_"), " ")), nil
+}
+
+templ Socials(store []models.Setting) {
+            	<div class="grid grid-cols-1">
+		for _, item1 := range store {
+
+
+                	{{ idx := slices.IndexFunc(store, func(c models.Setting) bool {	return c.KeyID == item1.KeyID+"_logo" } ) }}
+					if idx != -1 {
+						// <label class="form-control input input-bordered flex item1s-center gap-2 relative w-full max-w-xs">
+						// 	<input type="text" class="grow" placeholder={ item1.KeyID } value={ item1.Value }/>
+						// 	// <img class="h-8 w-8 absolute" src={ data[idx].Value }  alt={ data[idx].KeyID }/>
+						// </label>
+                        										<label class="form-control w-full max-w-xs relative">
+						<div class="label">
+							<span class="label-text">{ Capitalize(item1.KeyID) }</span>
+						</div>
+						<input type="text" name={ item1.KeyID } value={ item1.Value } class="input input-bordered w-full max-w-xs"/>
+                        <img class="h-8 w-8 absolute" src={ store[idx].Value }  alt={ store[idx].KeyID }/>
+						<div class="label">
+							<span class="label-text-alt">Bottom Left label</span>
+						</div>
+					</label>
+					}
+		}
+	</div>
+}

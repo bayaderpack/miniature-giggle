@@ -1,18 +1,2 @@
 <div class=\"grid grid-cols-3\">
-<div id=\"map\" class=\"
-\"></div><input type=\"hidden\" id=\"geo\" name=\"geo\" value=\"
-\">
-    <label class=\"form-control w-full max-w-xs\"><div class=\"label\"><span class=\"label-text\">
-</span></div><input type=\"text\" name=\"
-\" value=\"
-\" class=\"input input-bordered w-full max-w-xs\"><div class=\"label\"><span class=\"label-text-alt\">Bottom Left label</span></div></label>
-<div class=\"form-control w-52\"><label class=\"label cursor-pointer\"><span class=\"label-text\">
-</span> <input type=\"checkbox\" name=\"
-\" class=\"toggle toggle-primary\"
- checked
-></label></div>
-<label class=\"form-control w-full max-w-xs\"><div class=\"label\"><span class=\"label-text\">
-</span></div><input type=\"text\" name=\"
-\" value=\"
-\" class=\"input input-bordered w-full max-w-xs\"><div class=\"label\"><span class=\"label-text-alt\">Bottom Left label</span></div></label>
 </div>

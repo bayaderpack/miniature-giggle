@@ -1,0 +1,41 @@
+package settings 
+
+import (
+	"github.com/bayadev/bayahtmx/models"	
+)
+
+
+templ Config(config []models.Setting) {
+        	<div class="grid grid-cols-1">
+
+		for _, item := range config {
+
+			switch item.KeyID {
+				case "tax_status", "points_status", "maintenance" :
+					<div class="form-control w-52">
+						<label class="label cursor-pointer">
+							<span class="label-text">{ Capitalize(item.KeyID) }</span>
+							<input
+								type="checkbox"
+								name={ item.KeyID }
+								class="toggle toggle-primary"
+								if item.Value == "1" {
+									checked
+								}
+							/>
+						</label>
+					</div>
+				default:
+					<label class="form-control w-full max-w-xs">
+						<div class="label">
+							<span class="label-text">{ Capitalize(item.KeyID) }</span>
+						</div>
+						<input type="text" name={ item.KeyID } value={ item.Value } class="input input-bordered w-full max-w-xs"/>
+						<div class="label">
+							<span class="label-text-alt">Bottom Left label</span>
+						</div>
+					</label>
+			}
+		}
+	</div>
+}

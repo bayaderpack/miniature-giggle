@@ -25,7 +25,7 @@ type SettingRepository interface {
 	Create(setting *Setting) error
 	GetSingle(id int) (*Setting, error)
 	GetAll() ([]Setting, error)
-	GetAllForSettingsPage() ([]Setting, error)
+	GetAllForSettingsPage() ([]Setting, []Setting, []Setting, error)
 	Update(setting *Setting) error
 	Delete(id int) error
 }
@@ -76,8 +76,22 @@ func (r *settingRepository) Delete(id int) error {
 }
 
 // Function to get all instances of setting
-func (r *settingRepository) GetAllForSettingsPage() ([]Setting, error) {
-	var setting []Setting
-	err := r.db.Debug().Where("code = ? OR code = ? OR code = ?", "store", "social", "config").Find(&setting).Error
-	return setting, err
+func (r *settingRepository) GetAllForSettingsPage() ([]Setting, []Setting, []Setting, error) {
+	
+	var settingConfig []Setting
+	err := r.db.Where("code = ? ", "config").Find(&settingConfig).Error
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	var settingStore []Setting
+	err = r.db.Where("code = ?", "store").Find(&settingStore).Error
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	var settingSocial []Setting
+	err = r.db.Where("code = ?", "social").Find(&settingSocial).Error
+	if err != nil {
+		return nil, nil, nil, err
+	}
+	return settingConfig, settingStore, settingSocial, err
 }

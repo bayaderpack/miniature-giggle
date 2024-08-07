@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/angelofallars/htmx-go"
@@ -13,13 +14,15 @@ import (
 
 func GetSettings(c *gin.Context) {
 
-	settings :=  models.NewSettingRepository(db.DB)
+	settings := models.NewSettingRepository(db.DB)
 
-	record, err := settings.GetAllForSettingsPage()
+	config, store, social, err := settings.GetAllForSettingsPage()
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
+
+	fmt.Printf("%+v", social)
 
 	// Define template meta tags.
 	metaTags := pages.MetaTags(
@@ -28,7 +31,7 @@ func GetSettings(c *gin.Context) {
 	)
 
 	// Define template body content.
-	bodyContent := pages.Settings(record)
+	bodyContent := pages.Settings(config, store, social)
 
 	// Define template layout for index page.
 	indexTemplate := templates.Layout(
