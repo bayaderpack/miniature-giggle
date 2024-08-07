@@ -12,7 +12,7 @@ import (
 var DB *gorm.DB
 
 // ConnectDB connect to db
-func ConnectDB() {
+func init() {
 	var err error
 	dsn := fmt.Sprintf("%s:%s@tcp(%s:%s)/%s?charset=utf8mb4&parseTime=True&loc=Local", config.Config("DB_USER"), config.Config("DB_PASSWORD"), config.Config("DB_HOST"), config.Config("DB_PORT"), config.Config("DB_NAME"))
 	DB, err = gorm.Open(mysql.Open(dsn), &gorm.Config{})

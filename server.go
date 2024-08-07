@@ -43,6 +43,8 @@ func runServer() error {
 	router.GET("/", handlers.IndexViewHandler)
 	router.GET("/table", handlers.TableViewHandler)
 
+	router.GET("/settings", handlers.GetSettings)
+
 	router.GET("/tab1", tab1)
 	router.GET("/tab2", tab2)
 	router.GET("/tab3", tab3)

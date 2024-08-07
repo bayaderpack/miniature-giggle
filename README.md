@@ -74,11 +74,7 @@ Tools:
 │   └── main.templ
 ├── utils
 │   └── utils.go
-├── .gitignore
-├── .dockerignore
-├── .prettierignore
 ├── .air.toml
-├── ...
 ├── Dockerfile
 ├── docker-compose.yml
 ├── prettier.config.js
