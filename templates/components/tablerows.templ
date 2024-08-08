@@ -24,15 +24,17 @@ templ TableRows(page int) {
 
 	for in, item := range quotation {
 		if len(quotation)-1 == in {
-			<tr class="h-32"
+			<tr class="border-b "
             
              hx-get={ "/quotation?page=" + strconv.Itoa(page+1) }
               hx-trigger="intersect once, click" hx-swap="beforeend" >
-				<td >{ item.Value }</td>
+				<td class="border-b border-r py-4 px-8">{ item.KeyID }</td>
+                <td >{ item.Value }</td>
 			</tr>
 		} else {
-			<tr class="h-32">
-				<td>{ item.Value }</td>
+			<tr class="border-b ">
+				<td class="border-b border-r py-4 px-8">{ item.KeyID }</td>
+                <td >{ item.Value }</td>
 			</tr>
 		}
 }

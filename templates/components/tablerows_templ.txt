@@ -1,5 +1,7 @@
-<tr class=\"h-32\" hx-get=\"
-\" hx-trigger=\"intersect once, click\" hx-swap=\"beforeend\"><td>
+<tr class=\"border-b \" hx-get=\"
+\" hx-trigger=\"intersect once, click\" hx-swap=\"beforeend\"><td class=\"border-b border-r py-4 px-8\">
+</td><td>
 </td></tr>
-<tr class=\"h-32\"><td>
+<tr class=\"border-b \"><td class=\"border-b border-r py-4 px-8\">
+</td><td>
 </td></tr>
