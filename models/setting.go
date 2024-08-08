@@ -105,7 +105,7 @@ func (r *settingRepository) GetAllRows(page int) ([]Setting, error) {
 	offset := (page - 1) * limit
 	
 	var settingQuotation []Setting
-	err := r.db.Where("code = ?", "quotation").Offset(offset).Limit(limit).Find(&settingQuotation).Error
+	err := r.db.Offset(offset).Limit(limit).Find(&settingQuotation).Error
 	if err != nil {
 		return nil, err
 	}
