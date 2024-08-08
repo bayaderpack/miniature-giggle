@@ -1,0 +1,5 @@
+<tr class=\"h-32\" hx-get=\"
+\" hx-trigger=\"intersect once, click\" hx-swap=\"beforeend\"><td>
+</td></tr>
+<tr class=\"h-32\"><td>
+</td></tr>

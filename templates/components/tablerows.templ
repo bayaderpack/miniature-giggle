@@ -1,0 +1,41 @@
+package components
+
+import (
+	"github.com/bayadev/bayahtmx/models"
+    "github.com/bayadev/bayahtmx/db"
+	"strconv"
+)
+
+// "strconv"
+
+
+
+
+func getMore(page int) []models.Setting {
+    	settings := models.NewSettingRepository(db.DB)
+
+	quotation, _ := settings.GetAllRows(page)
+    return quotation
+}
+
+templ TableRows(page int) {
+
+    {{ quotation := getMore(page) }}
+
+	for in, item := range quotation {
+		if len(quotation)-1 == in {
+			<tr class="h-32"
+            
+             hx-get={ "/quotation?page=" + strconv.Itoa(page+1) }
+              hx-trigger="intersect once, click" hx-swap="beforeend" >
+				<td >{ item.Value }</td>
+			</tr>
+		} else {
+			<tr class="h-32">
+				<td>{ item.Value }</td>
+			</tr>
+		}
+}
+	
+
+}

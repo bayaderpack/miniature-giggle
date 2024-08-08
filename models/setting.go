@@ -28,6 +28,7 @@ type SettingRepository interface {
 	GetAllForSettingsPage() ([]Setting, []Setting, []Setting, error)
 	Update(setting *Setting) error
 	Delete(id int) error
+	GetAllRows(page int) ([]Setting, error)
 }
 
 type settingRepository struct {
@@ -94,4 +95,19 @@ func (r *settingRepository) GetAllForSettingsPage() ([]Setting, []Setting, []Set
 		return nil, nil, nil, err
 	}
 	return settingConfig, settingStore, settingSocial, err
+}
+
+//Function  to get all rows
+
+func (r *settingRepository) GetAllRows(page int) ([]Setting, error) {
+	var limit = 5
+
+	offset := (page - 1) * limit
+	
+	var settingQuotation []Setting
+	err := r.db.Where("code = ?", "quotation").Offset(offset).Limit(limit).Find(&settingQuotation).Error
+	if err != nil {
+		return nil, err
+	}
+	return settingQuotation, nil
 }

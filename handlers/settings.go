@@ -1,13 +1,14 @@
 package handlers
 
 import (
-	"fmt"
 	"net/http"
+	"strconv"
 
 	"github.com/angelofallars/htmx-go"
 	"github.com/bayadev/bayahtmx/db"
 	"github.com/bayadev/bayahtmx/models"
 	"github.com/bayadev/bayahtmx/templates"
+	"github.com/bayadev/bayahtmx/templates/components"
 	"github.com/bayadev/bayahtmx/templates/pages"
 	"github.com/gin-gonic/gin"
 )
@@ -22,7 +23,6 @@ func GetSettings(c *gin.Context) {
 		return
 	}
 
-	fmt.Printf("%+v", social)
 
 	// Define template meta tags.
 	metaTags := pages.MetaTags(
@@ -47,3 +47,29 @@ func GetSettings(c *gin.Context) {
 		return
 	}
 }
+
+
+func GetQuotations(c *gin.Context) {
+
+
+
+	page := c.Query("page")
+	var pageInt = 1
+	if page != "" {
+	pageInt,_ = strconv.Atoi(page)
+	}
+
+
+
+	// Define template body content.
+	bodyContent := components.TableRows(pageInt)
+
+
+	// Render index page template.
+	if err := htmx.NewResponse().RenderTempl(c.Request.Context(), c.Writer, bodyContent); err != nil {
+		// If not, return HTTP 500 error.
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+}
+
